@@ -1,7 +1,6 @@
 # Starter pipeline
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
-
 trigger:
 - master
 
@@ -27,24 +26,3 @@ steps:
     repository: 'result'
     command: 'buildAndPush'
     Dockerfile: 'result/Dockerfile'
-
-stages:
-- stage: Deploy
-  displayName: 'Deploy'
-  jobs:
-  - deployment: Deployment
-    displayName: 'Deployment'
-    environment: '{EnvironmentName.ResourceName}'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - checkout: self
-
-          - task: CopyFiles@2
-            displayName: 'Copy Files to: {Destination Directory}'
-            inputs:
-              SourceFolder: '$(Pipeline.Workspace)'
-              Contents: '**'
-              TargetFolder: '{Destination Directory}'
-              CleanTargetFolder: true
